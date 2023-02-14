@@ -35,7 +35,7 @@ int main(void)
 	myQueue.push_back(5);
 	std::cout << "	just pushed +++++" << std::endl;
 	//Print queue
-	Print<int>(myQueue);
+	Print<int>(myQueue); 
 	myQueue.pop_front();
 	std::cout << "		just popped -----" << std::endl;
 	myQueue.pop_front();

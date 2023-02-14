@@ -22,7 +22,7 @@ class Application
 {
 	MyMesh* m_pMesh = nullptr;
 private:
-	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+	String m_sProgrammer = "Anthony Levick - labigm@rit.edu";
 	static ImGuiObject gui; //GUI object
 
 	uint m_uRenderCallCount = 0; //count of render calls per frame

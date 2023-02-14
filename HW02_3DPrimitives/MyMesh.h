@@ -195,6 +195,9 @@ public:
 	-	a_v3Color -> Color of the mesh
 	OUTPUT: ---
 	*/
+
+	float CalculateTorusX(float midpointRadius, float tubeRadius, float tubeAngle, float torusAngle);
+	float CalculateTorusY(float midpointRadius, float tubeRadius, float tubeAngle, float torusAngle);
 	void GenerateTorus(float a_fOuterRadius, float a_fInnerRadius, int a_nSubdivisionHeight, int a_nSubdivisionAxis, vector3 a_v3Color = C_WHITE);
 	/*
 	USAGE: Generates a Sphere mesh

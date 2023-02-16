@@ -22,22 +22,22 @@ void MyMesh::GenerateCube(float a_fSize, vector3 a_v3Color)
 	vector3 point6(fValue, fValue, -fValue); //6
 	vector3 point7(-fValue, fValue, -fValue); //7
 
-	//F
+	//Front
 	AddQuad(point0, point1, point3, point2);
 
-	//B
+	//Back
 	AddQuad(point5, point4, point6, point7);
 
-	//L
+	//Left
 	AddQuad(point4, point0, point7, point3);
 
-	//R
+	//Right
 	AddQuad(point1, point5, point2, point6);
 
-	//U
+	//Uup
 	AddQuad(point3, point2, point7, point6);
 
-	//D
+	//Down
 	AddQuad(point4, point5, point0, point1);
 
 	// Adding information about color
@@ -66,18 +66,11 @@ void MyMesh::GenerateCone(float a_fRadius, float a_fHeight, int a_nSubdivisions,
 
 	vector3 center(0.0f, 0.0f, 0.0f);
 	vector3 tip(0.0f, 0.0f, -a_fHeight);
-	vector3 start(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0.0f);
-	vector3 prev = start;
+	vector3 current(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0.0f);
+	vector3 prev = current;
 
 	for (int i = 0; i < a_nSubdivisions; i++)
 	{
-		if (i == a_nSubdivisions - 1)
-		{
-			AddTri(prev, center, start);
-			AddTri(start, tip, prev);
-			break;
-		}
-
 		tempVal -= subDivAngle;
 
 		vector3 cur(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0);
@@ -268,6 +261,7 @@ void MyMesh::GenerateTorus(float a_fOuterRadius, float a_fInnerRadius, int a_nSu
 			vector3 firstTorusFirstTubeVertex = vector3(CalculateTorusX(midpointRadius, tubeRadius, currentTubeAngle, currentTorusAngle),
 				CalculateTorusY(midpointRadius, tubeRadius, currentTubeAngle, currentTorusAngle),
 				tubeRadius * sinf(currentTubeAngle));
+
 			vector3 firstTorusSecondTubeVertex = vector3(CalculateTorusX(midpointRadius, tubeRadius, nextTubeAngle, currentTorusAngle),
 				CalculateTorusY(midpointRadius, tubeRadius, nextTubeAngle, currentTorusAngle),
 				tubeRadius * sinf(nextTubeAngle));
@@ -276,6 +270,7 @@ void MyMesh::GenerateTorus(float a_fOuterRadius, float a_fInnerRadius, int a_nSu
 			vector3 secondTorusFirstTubeVertex = vector3(CalculateTorusX(midpointRadius, tubeRadius, currentTubeAngle, nextTorusAngle),
 				CalculateTorusY(midpointRadius, tubeRadius, currentTubeAngle, nextTorusAngle),
 				tubeRadius * sinf(currentTubeAngle));
+
 			vector3 secondTorusSecondTubeVertex = vector3(CalculateTorusX(midpointRadius, tubeRadius, nextTubeAngle, nextTorusAngle),
 				CalculateTorusY(midpointRadius, tubeRadius, nextTubeAngle, nextTorusAngle),
 				tubeRadius * sinf(nextTubeAngle));

@@ -317,7 +317,10 @@ void MyMesh::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a_v3Co
 			AddTri(Points[i][j + 1], Points[i - 1][j + 1], Points[i - 1][j]);
 
 			//makes the bottom end
-
+			if (i == a_nSubdivisions - 1)
+			{
+				AddTri(Points[i][j + 1], Points[i][j], bottom);
+			}
 		}
 	}
 

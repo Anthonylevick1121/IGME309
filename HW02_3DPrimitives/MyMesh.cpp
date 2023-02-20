@@ -108,10 +108,10 @@ void MyMesh::GenerateCylinder(float a_fRadius, float a_fHeight, int a_nSubdivisi
 
 	vector3 center(0.0f, 0.0f, 0.0f);
 	vector3 centerTop(0.0f, 0.0f, -a_fHeight);
-	vector3 start(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0.0f);
-	vector3 startTop(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), -a_fHeight);
-	vector3 prev = start;
-	vector3 prevTop = startTop;
+	vector3 cur(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0.0f);
+	vector3 curTop(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), -a_fHeight);
+	vector3 prev = cur;
+	vector3 prevTop = curTop;
 
 	for (int i = 0; i < a_nSubdivisions; i++)
 	{

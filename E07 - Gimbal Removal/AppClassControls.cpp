@@ -104,31 +104,39 @@ void Application::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		m_pCameraMngr->MoveVertical(fSpeed);
 #pragma endregion
+
+	quaternion q1;
+	quaternion q2;
+	quaternion q3;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
 		if (fMultiplier)
-			m_v3Rotation.x -= 1.0f;
+			q1 = glm::angleAxis(glm::radians(-1.0f), AXIS_X);
 		else
-			m_v3Rotation.x += 1.0f;
+			q1 = glm::angleAxis(glm::radians(1.0f), AXIS_X);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
 	{
 		if (fMultiplier)
-			m_v3Rotation.y -= 1.0f;
+			q2 = glm::angleAxis(glm::radians(-1.0f), AXIS_Y);
 		else
-			m_v3Rotation.y += 1.0f;
+			q2 = glm::angleAxis(glm::radians(1.0f), AXIS_Y);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 	{
 		if (fMultiplier)
-			m_v3Rotation.z -= 1.0f;
+			q3 = glm::angleAxis(glm::radians(-1.0f), AXIS_Z);
 		else
-			m_v3Rotation.z += 1.0f;
+			q3 = glm::angleAxis(glm::radians(1.0f), AXIS_Z);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
-		m_v3Rotation = vector3(0.0f);
+		projection = quaternion();
 	}
+
+	projection *= q1 * q2 * q3;
+
 }
 //Mouse
 void Application::ProcessMousePressed(sf::Event a_event)
@@ -264,7 +272,7 @@ void Application::CameraRotation(float a_fSpeed)
 	UINT	MouseX, MouseY;		// Coordinates for the mouse
 	UINT	CenterX, CenterY;	// Coordinates for the center of the screen.
 
-								//Initialize the position of the pointer to the middle of the screen
+	//Initialize the position of the pointer to the middle of the screen
 	CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
 	CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
 

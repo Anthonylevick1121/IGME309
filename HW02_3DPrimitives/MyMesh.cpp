@@ -76,7 +76,7 @@ void MyMesh::GenerateCone(float a_fRadius, float a_fHeight, int a_nSubdivisions,
 		vector3 cur(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0);
 
 		AddTri(prev, center, cur);
-		AddTri(cur, tip, prev);
+		//AddTri(cur, tip, prev);
 
 		prev = cur;
 	}

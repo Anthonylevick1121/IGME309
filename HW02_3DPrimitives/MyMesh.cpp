@@ -76,7 +76,7 @@ void MyMesh::GenerateCone(float a_fRadius, float a_fHeight, int a_nSubdivisions,
 		vector3 cur(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0);
 
 		AddTri(prev, center, cur);
-		AddTri(cur, tip, prev);
+		//AddTri(cur, tip, prev);
 
 		prev = cur;
 	}
@@ -108,20 +108,14 @@ void MyMesh::GenerateCylinder(float a_fRadius, float a_fHeight, int a_nSubdivisi
 
 	vector3 center(0.0f, 0.0f, 0.0f);
 	vector3 centerTop(0.0f, 0.0f, -a_fHeight);
-	vector3 start(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0.0f);
-	vector3 startTop(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), -a_fHeight);
-	vector3 prev = start;
-	vector3 prevTop = startTop;
+	vector3 cur(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), 0.0f);
+	vector3 curTop(a_fRadius * cosf(tempVal), a_fRadius * sinf(tempVal), -a_fHeight);
+	vector3 prev = cur;
+	vector3 prevTop = curTop;
 
 	for (int i = 0; i < a_nSubdivisions; i++)
 	{
-		if (i == a_nSubdivisions - 1)
-		{
-			AddTri(prev, center, start);
-			AddQuad(prev, start, prevTop, startTop);
-			AddTri(startTop, centerTop, prevTop);
-			break;
-		}
+
 
 		tempVal -= subDivAngle;
 
@@ -168,26 +162,18 @@ void MyMesh::GenerateTube(float a_fOuterRadius, float a_fInnerRadius, float a_fH
 	float subDivAngle = (2 * PI) / a_nSubdivisions; // Radians
 	float tempVal = 0;
 
-	vector3 start(a_fInnerRadius * cosf(tempVal), a_fInnerRadius * sinf(tempVal), 0.0f);
-	vector3 startExtended(a_fOuterRadius * cosf(tempVal), a_fOuterRadius * sinf(tempVal), 0.0f);
-	vector3 startTop(a_fInnerRadius * cosf(tempVal), a_fInnerRadius * sinf(tempVal), -a_fHeight);
-	vector3 startExtendedTop(a_fOuterRadius * cosf(tempVal), a_fOuterRadius * sinf(tempVal), -a_fHeight);
+	vector3 current(a_fInnerRadius * cosf(tempVal), a_fInnerRadius * sinf(tempVal), 0.0f);
+	vector3 curExtended(a_fOuterRadius * cosf(tempVal), a_fOuterRadius * sinf(tempVal), 0.0f);
+	vector3 curTop(a_fInnerRadius * cosf(tempVal), a_fInnerRadius * sinf(tempVal), -a_fHeight);
+	vector3 curExtendedTop(a_fOuterRadius * cosf(tempVal), a_fOuterRadius * sinf(tempVal), -a_fHeight);
 
-	vector3 prev = start;
-	vector3 prevExtended = startExtended;
-	vector3 prevTop = startTop;
-	vector3 prevExtendedTop = startExtendedTop;
+	vector3 prev = current;
+	vector3 prevExtended = curExtended;
+	vector3 prevTop = curTop;
+	vector3 prevExtendedTop = curExtendedTop;
 
 	for (int i = 0; i < a_nSubdivisions; i++)
 	{
-		if (i == a_nSubdivisions - 1)
-		{
-			AddQuad(prev, start, prevExtended, startExtended); // Bottom
-			AddQuad(start, prev, startTop, prevTop); // Inside
-			AddQuad(startTop, prevTop, startExtendedTop, prevExtendedTop); // Top
-			AddQuad(prevExtended, startExtended, prevExtendedTop, startExtendedTop); // Outside
-			break;
-		}
 
 		tempVal -= subDivAngle;
 

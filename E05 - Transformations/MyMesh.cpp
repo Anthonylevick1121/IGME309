@@ -181,38 +181,31 @@ void MyMesh::GenerateCube(float a_fSize, vector3 a_v3Color)
 	Release();
 	Init();
 
-	float fValue = a_fSize * 0.5f;
-	//3--2
-	//|  |
-	//0--1
+	float a_fvalue = a_fSize * .5;
 
-	vector3 point0(-fValue, -fValue, fValue); //0
-	vector3 point1(fValue, -fValue, fValue); //1
-	vector3 point2(fValue, fValue, fValue); //2
-	vector3 point3(-fValue, fValue, fValue); //3
+	vector3 pointOne(a_fvalue, a_fvalue, a_fvalue);
+	vector3 pointTwo(a_fvalue, -a_fvalue, a_fvalue);
+	vector3 pointThree(-a_fvalue, a_fvalue, a_fvalue);
+	vector3 pointFour(-a_fvalue, -a_fvalue, a_fvalue);
+	vector3 pointFive(a_fvalue, a_fvalue, -a_fvalue);
+	vector3 pointSix(a_fvalue, -a_fvalue, -a_fvalue);
+	vector3 pointSeven(-a_fvalue, a_fvalue, -a_fvalue);
+	vector3 pointEight(-a_fvalue, -a_fvalue, -a_fvalue);
+	
 
-	vector3 point4(-fValue, -fValue, -fValue); //4
-	vector3 point5(fValue, -fValue, -fValue); //5
-	vector3 point6(fValue, fValue, -fValue); //6
-	vector3 point7(-fValue, fValue, -fValue); //7
+	AddQuad(pointFour,pointTwo,pointThree,pointOne);
 
-											  //F
-	AddQuad(point0, point1, point3, point2);
+	AddQuad(pointTwo,pointSix,pointOne,pointFive);
 
-	//B
-	AddQuad(point5, point4, point6, point7);
+	AddQuad(pointSix,pointEight,pointFive,pointSeven);
 
-	//L
-	AddQuad(point4, point0, point7, point3);
+	AddQuad(pointEight, pointFour, pointSeven, pointThree);
 
-	//R
-	AddQuad(point1, point5, point2, point6);
+	AddQuad(pointOne,pointFive,pointThree,pointSeven);
 
-	//U
-	AddQuad(point3, point2, point7, point6);
+	AddQuad(pointEight,pointSix,pointFour, pointTwo);
 
-	//D
-	AddQuad(point4, point5, point0, point1);
+
 
 	// Adding information about color
 	CompleteMesh(a_v3Color);

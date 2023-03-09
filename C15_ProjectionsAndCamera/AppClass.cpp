@@ -13,7 +13,7 @@ void Application::InitVariables(void)
 	m_pMesh->GenerateCone(0.5f, 1.0f, 6, C_GREEN);
 
 	//Load a model for example with complex models
-	m_pModelMngr->LoadModel("Minecraft\\Steve.obj");
+	//m_pModelMngr->LoadModel("Minecraft\\Steve.obj");
 
 	//create a new camera
 	m_pCamera = new MyCamera();
@@ -49,12 +49,15 @@ void Application::Display(void)
 	ClearScreen();
 
 	// draw a skybox
-	m_pModelMngr->AddSkyboxToRenderList();
+	//m_pModelMngr->AddSkyboxToRenderList();
 
 	//Camera position
 	static float fPos = 0.0f;
-	m_pCamera->SetPosition(vector3(fPos, 0.0f, 10.0f));
-	m_pCamera->SetTarget(vector3(fPos, 0.0f, 9.0f));
+	m_pCamera->SetPosition(vector3(0.0f, 0.0f, 10.0f + fPos));
+	m_pCamera->SetTarget(vector3(0.0f, 0.0f, 0.0f + fPos));
+	m_pCamera->SetUp(vector3(0.0f, 1.0f, 0.0));
+
+	
 	fPos -= 0.01f;
 	/* 
 	Steve is in the dll's Camera class space, while the other primitives

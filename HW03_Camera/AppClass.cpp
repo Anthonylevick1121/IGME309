@@ -1,6 +1,11 @@
 #include "AppClass.h"
 void Application::InitVariables(void)
 {
+	quaternion q1 = glm::angleAxis(glm::radians(90.0f), AXIS_Y);
+	vector3 v1(1.0, 0.0, 0.0);
+
+	vector3 v2 = glm::rotate(q1, v1);
+
 	////Change this to your name and email
 	m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
 	vector3 v3Position(0.0f, 15.0f, 25.0f);

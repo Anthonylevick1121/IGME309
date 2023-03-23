@@ -21,20 +21,34 @@ void MyCamera::MoveForward(float a_fDistance)
 	//		 in the _Binary folder you will notice that we are moving 
 	//		 backwards and we never get closer to the plane as we should 
 	//		 because as we are looking directly at it.
-	m_v3Position += vector3(0.0f, 0.0f, a_fDistance);
-	m_v3Target += vector3(0.0f, 0.0f, a_fDistance);
+	// Move in the direction of the forward vector
+	vector3 v3ForwardDistance = glm::normalize(m_v3Target - m_v3Position) * a_fDistance;
+	m_v3Position += v3ForwardDistance;
+	m_v3Target += v3ForwardDistance;
+	m_v3Above += v3ForwardDistance;
 }
 void MyCamera::MoveVertical(float a_fDistance)
 {
 	//Tip:: Look at MoveForward
-	m_v3Position += vector3(0.0f, a_fDistance, 0.0f);
-	m_v3Target += vector3(0.0f, a_fDistance, 0.0f);
+	vector3 rightward = glm::normalize(glm::cross(glm::normalize(m_v3Target - m_v3Position),
+		glm::normalize(m_v3Above - m_v3Position)));
+
+	vector3 v3VerticalDistance = glm::normalize(glm::rotate(glm::normalize(m_v3Target - m_v3Position),
+		glm::radians(90.0f),
+		rightward)) * a_fDistance;
+	m_v3Position += v3VerticalDistance;
+	m_v3Target += v3VerticalDistance;
+	m_v3Above += v3VerticalDistance;
+
 }
 void MyCamera::MoveSideways(float a_fDistance)
 {
 	//Tip:: Look at MoveForward
-	m_v3Position += vector3(a_fDistance,0.0f,0.0f);
-	m_v3Target += vector3(a_fDistance,0.0f,0.0f);
+	vector3 v3HorizontalDistance = glm::normalize(glm::cross(glm::normalize(m_v3Target - m_v3Position),
+		glm::normalize(m_v3Above - m_v3Position))) * a_fDistance;
+	m_v3Position += v3HorizontalDistance;
+	m_v3Target += v3HorizontalDistance;
+	m_v3Above += v3HorizontalDistance;
 }
 void MyCamera::CalculateView(void)
 {
@@ -44,7 +58,24 @@ void MyCamera::CalculateView(void)
 	//		 it will receive information from the main code on how much these orientations
 	//		 have change so you only need to focus on the directional and positional 
 	//		 vectors. There is no need to calculate any right click process or connections.
+//here I need to calculate the total rotation by using yaw * pitch
+	quaternion pitch = glm::angleAxis(m_v3PitchYawRoll.x, m_v3Rightward);
+	quaternion yaw = glm::angleAxis(m_v3PitchYawRoll.y, m_v3Upward);
+
+	quaternion rotaion = glm::normalize(pitch * yaw);
+
+	//Update positional vector
+	m_v3Position = glm::rotate(rotaion, m_v3Position);
+	m_v3Target = glm::rotate(rotaion, m_v3Target);
+
+	//Update directional vector
+	m_v3Forward = glm::rotate(rotaion, m_v3Forward);
+	m_v3Rightward = glm::rotate(rotaion, m_v3Rightward);
+
 	m_m4View = glm::lookAt(m_v3Position, m_v3Target, m_v3Upward);
+
+	//Reset PitchYawRoll
+	m_v3PitchYawRoll = ZERO_V3;
 }
 //You can assume that the code below does not need changes unless you expand the functionality
 //of the class or create helper methods, etc.

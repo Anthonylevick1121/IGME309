@@ -8,7 +8,7 @@ void Application::InitVariables(void)
 	vector3 v3Upward = AXIS_Y;
 	m_pCameraMngr->SetPositionTargetAndUpward(v3Position, v3Target, v3Upward);
 
-	m_sModel1 = "SphereCube.obj";
+	m_sModel1 = "Minecraft\\Creeper.obj";
 	m_sModel2 = "Minecraft\\Steve.obj";
 
 	//creeper
@@ -45,10 +45,15 @@ void Application::Update(void)
 	//The following code will be used in a future lesson, feel free to uncomment it and see
 	//what is comming but so far we will only use the SphereCube model
 	//Set model matrix to Steve
-	//m_pModelMngr->AddModelToRenderList(m_sModel2, glm::translate(vector3(2.25f, 0.0f, 0.0f)));
-	//m_pModel2RB->SetModelMatrix(glm::translate(vector3(2.25f, 0.0f, 0.0f)));
-	//m_pModel2RB->SetColor(C_WHITE); //reset the color of the rigid bodies to white
-	//m_pModel2RB->AddToRenderList();
+	m_pModelMngr->AddModelToRenderList(m_sModel2, glm::translate(vector3(2.25f, 0.0f, 0.0f)));
+	m_pModel2RB->SetModelMatrix(glm::translate(vector3(2.25f, 0.0f, 0.0f)));
+	m_pModel2RB->SetColor(C_WHITE); //reset the color of the rigid bodies to white
+	m_pModel2RB->AddToRenderList();
+
+	m_pModel1RB->IsColliding(m_pModel2RB);
+
+	m_pModel1RB->AddToRenderList();
+	m_pModel2RB->AddToRenderList();
 }
 void Application::Display(void)
 {
@@ -57,6 +62,7 @@ void Application::Display(void)
 
 	// draw a skybox
 	m_pModelMngr->AddSkyboxToRenderList();
+	//m_pModelMngr->AddGridToRenderList();
 
 	//render list call
 	m_uRenderCallCount = m_pModelMngr->Render();

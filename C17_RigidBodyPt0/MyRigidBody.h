@@ -168,6 +168,8 @@ private:
 	Output: ---
 	*/
 	void Init(void);
+
+	vector3 GlobalizeVector(vector3 input);
 };//class
 
 } //namespace BTX

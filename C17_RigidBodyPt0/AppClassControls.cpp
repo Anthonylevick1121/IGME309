@@ -104,6 +104,18 @@ void Application::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		m_pCameraMngr->MoveVertical(fSpeed);
 #pragma endregion
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		m_v3Model1 += vector3(0.0f,0.1f,0.0f);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		m_v3Model1 += vector3(0.0f, -0.1f, 0.0f);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		m_v3Model1 += vector3(-0.1f, 0.0f, 0.0f);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		m_v3Model1 += vector3(0.1f, 0.0f, 0.0f);
 }
 //Mouse
 void Application::ProcessMousePressed(sf::Event a_event)

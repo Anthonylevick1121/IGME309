@@ -13,7 +13,34 @@ vector3 MyRigidBody::GetMinGlobal(void) { return m_v3MinG; }
 vector3 MyRigidBody::GetMaxGlobal(void) { return m_v3MaxG; }
 vector3 MyRigidBody::GetHalfWidth(void) { return m_v3HalfWidth; }
 matrix4 MyRigidBody::GetModelMatrix(void) { return m_m4ToWorld; }
-void MyRigidBody::SetModelMatrix(matrix4 a_m4ModelMatrix) { m_m4ToWorld = a_m4ModelMatrix; }
+vector3 MakeGlobal(matrix4 m4ToWorld, vector3 input) { return m4ToWorld * vector4(input, 1.0); }
+void MyRigidBody::SetModelMatrix(matrix4 a_m4ModelMatrix) 
+{ 
+
+	if (m_m4ToWorld == a_m4ModelMatrix)
+		return;
+
+	m_m4ToWorld = a_m4ModelMatrix; 
+
+	std::vector<vector3> cornerList;
+	cornerList.push_back(vector3(m_v3MinL.x,m_v3MinL.y,m_v3MinL.z)); //000
+	cornerList.push_back(vector3(m_v3MinL.x, m_v3MinL.y, m_v3MaxL.z));//001
+	cornerList.push_back(vector3(m_v3MinL.x, m_v3MaxL.y, m_v3MinL.z));//010
+	cornerList.push_back(vector3(m_v3MinL.x, m_v3MaxL.y, m_v3MaxL.z));//011
+
+	cornerList.push_back(vector3(m_v3MaxL.x, m_v3MinL.y, m_v3MinL.z));//100
+	cornerList.push_back(vector3(m_v3MaxL.x, m_v3MinL.y, m_v3MaxL.z));//101
+	cornerList.push_back(vector3(m_v3MaxL.x, m_v3MaxL.y, m_v3MinL.z));//110
+	cornerList.push_back(vector3(m_v3MaxL.x, m_v3MaxL.y, m_v3MaxL.z));//111
+
+	for (uint i = 0; i < cornerList.size(); i++)
+	{
+		cornerList[i] = MakeGlobal(m_m4ToWorld, cornerList[i]);
+	}
+	MyRigidBody oTemp(cornerList);
+	m_v3MinG=oTemp.m_v3MinG;
+	m_v3MaxG=oTemp.m_v3MaxG;
+}
 //Allocation
 void MyRigidBody::Init(void)
 {
@@ -145,6 +172,26 @@ void MyRigidBody::AddToRenderList(void)
 	 m4Transform = m_m4ToWorld * glm::translate(vector3(m_v3Center));
 	m4Transform = m4Transform * glm::scale(m_v3HalfWidth * 2);
 	m_pMeshMngr->AddWireCubeToRenderList(m4Transform, m_v3Color);
+
+	if (m_bVisibleBS)
+	{
+
+	}
+	else
+	{
+
+	}
+
+	if (m_bVisibleAABB)
+	{
+
+	}
+	else {
+
+	}
+
+	vector3 v3ARBBSize = m_v3MaxG - m_v3MinG;
+	m_pMeshMngr->AddWireCubeToRenderList(glm::translate(MakeGlobal(m_m4ToWorld,m_v3Center)) * glm::scale(v3ARBBSize), C_YELLOW);
 }
 vector3 MyRigidBody::GlobalizeVector(vector3 input)
 {

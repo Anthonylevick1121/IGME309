@@ -17,6 +17,9 @@ class MyRigidBody
 
 	bool m_bVisible = true; //Visibility
 
+	bool m_bVisibleBS = false; //Visibility of bounding sphere
+	bool m_bVisibleAABB = true; //Visibility of axis aligned bounding box
+
 	float m_fRadius = 0.0f; //Radius
 
 	vector3 m_v3Color = C_WHITE; //Color
@@ -82,6 +85,23 @@ public:
 	Output: visibility
 	*/
 	bool GetVisible(void);
+
+	bool GetVisibleBS(void);
+	/*
+	Usage: Sets visibility of bounding sphere
+	Arguments: bool a_bVisibility -> visibility to set
+	*/
+	void SetVisibleBS(bool a_bVisibility);
+	/*
+	Usage: Gets visibility of axis aligned bounding box
+	Output: visibility
+	*/
+	bool GetVisibleAABB(void);
+	/*
+	Usage: Sets visibility of axis aligned bounding box
+	Arguments: bool a_bVisibility -> visibility to set
+	*/
+	void SetVisibleAABB(bool a_bVisibility);
 	/*
 	Usage: Gets radius
 	Output: radius

@@ -2,7 +2,7 @@
 void Application::InitVariables(void)
 {
 	////Change this to your name and email
-	m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+	m_sProgrammer = "Anthony Levick - acl9861@g.rit.edu";
 	vector3 v3Position(0.0f, 0.0f, 10.0f);
 	vector3 v3Target = ZERO_V3;
 	vector3 v3Upward = AXIS_Y;
@@ -51,7 +51,7 @@ void Application::Display(void)
 {
 	// Clear the screen
 	ClearScreen();
-	
+
 	matrix4 m4Model = ToMatrix4(m_qArcBall);//model matrix
 
 	// draw a skybox
@@ -65,7 +65,7 @@ void Application::Display(void)
 
 	//draw gui
 	DrawGUI();
-	
+
 	//end the current frame (internally swaps the front and back buffers)
 	m_pWindow->display();
 }
